@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Record</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            border: 1px solid #dbdbdb;
+            width: 400px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3EA8AA;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #358F91;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #3EA8AA;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>새 게시물 만들기</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <textarea name="content" placeholder="문구 입력..." required></textarea>
+        <button type="submit">등록하기</button>
+    </form>
+    <a href="/home" class="back-link">취소</a>
+</div>
+
+</body>
+</html>

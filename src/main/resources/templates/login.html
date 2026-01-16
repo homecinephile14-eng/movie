@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <style>
+        .error-msg {
+            color: #ed4956;
+            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 0;
+            text-align: center;
+            display: none;
+            font-weight: bold;
+        }
+
+        .input-error {
+            border: 1px solid #ed4956 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+        <h1 class="logo">Record Movie</h1>
+
+        <form action="/login" method="post">
+            <input type="text" id="username" name="username" placeholder="아이디" required>
+            <input type="password" name="password" placeholder="비밀번호" required>
+            <button type="submit" id="loginBtn">로그인</button>
+        </form>
+
+        <div id="usernameError" class="error-msg">
+            회원 정보가 없습니다. 회원가입을 진행해주세요.
+        </div>
+    </div>
+
+    <div class="auth-box signup-box">
+        <span>계정이 없으신가요?</span>
+        <a href="/signup">회원가입</a>
+    </div>
+
+</div>
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const errorMsg = document.getElementById('usernameError');
+    const loginBtn = document.getElementById('loginBtn');
+
+    usernameInput.addEventListener('blur', function() {
+        const username = usernameInput.value;
+
+        if (username.length < 1) {
+            hideError();
+            return;
+        }
+
+        fetch('/api/check-username?username=' + username)
+            .then(response => response.json())
+            .then(exists => {
+                if (!exists) {
+                    showError();
+                } else {
+                    hideError();
+                }
+            })
+            .catch(err => console.error('Error:', err));
+    });
+
+    usernameInput.addEventListener('focus', function() {
+        hideError();
+    });
+
+    function showError() {
+        errorMsg.style.display = 'block';
+        usernameInput.classList.add('input-error');
+        loginBtn.disabled = true;
+        loginBtn.style.opacity = '0.5';
+    }
+
+    function hideError() {
+        errorMsg.style.display = 'none';
+        usernameInput.classList.remove('input-error');
+        loginBtn.disabled = false;
+        loginBtn.style.opacity = '1';
+    }
+</script>
+
+</body>
+</html>

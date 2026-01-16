@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Record</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            border: 1px solid #dbdbdb;
+            width: 400px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .current-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3EA8AA;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #358F91;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #3EA8AA;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>게시물 수정</h2>
+    <form th:action="@{/record/{id}/edit(id=${record.id})}" method="post" enctype="multipart/form-data">
+
+        <p style="margin: 0; font-size: 12px; color: #888;">현재 사진</p>
+        <img th:src="${record.imagePath}" class="current-img">
+
+        <p style="margin: 0; font-size: 12px; color: #888; text-align: left;">사진 변경 (선택)</p>
+        <input type="file" name="file" accept="image/*">
+
+        <textarea name="content" th:text="${record.content}" required></textarea>
+
+        <button type="submit">수정 완료</button>
+    </form>
+    <a href="/home" class="back-link">취소</a>
+</div>
+
+</body>
+</html>

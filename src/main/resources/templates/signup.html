@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <style>
+        .error-msg {
+            color: #ed4956;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            text-align: left;
+            display: none;
+        }
+
+        .input-error {
+            border: 1px solid #ed4956 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+        <h1 class="logo">회원가입</h1>
+        <p class="subtitle">사진과 글로 영화를 기억하세요</p>
+
+        <form action="/signup" method="post">
+            <input type="text" id="username" name="username" placeholder="아이디 (6~50자)"
+                   th:value="${username}" required minlength="6" maxlength="50">
+
+            <div id="usernameError" class="error-msg" style="display:none;">
+                이미 존재하는 아이디입니다.
+            </div>
+
+            <input type="password" name="password" placeholder="비밀번호 (6~50자)"
+                   required minlength="6" maxlength="50">
+
+            <div th:if="${errorMessage}" class="error-msg">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <button type="submit" id="submitBtn">가입하기</button>
+        </form>
+    </div>
+
+    <div class="auth-box signup-box">
+        <span>계정이 있으신가요?</span>
+        <a href="/">로그인</a>
+    </div>
+
+</div>
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const errorMsg = document.getElementById('usernameError');
+    const submitBtn = document.getElementById('submitBtn');
+
+    usernameInput.addEventListener('keyup', function() {
+        const username = usernameInput.value;
+
+        if (username.length < 1) {
+            hideError();
+            return;
+        }
+
+        fetch('/api/check-username?username=' + username)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                if (isDuplicate) {
+                    showError();
+                } else {
+                    hideError();
+                }
+            })
+            .catch(err => console.error('Error:', err));
+    });
+
+    function showError() {
+        errorMsg.style.display = 'block';
+        usernameInput.classList.add('input-error');
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+    }
+
+    function hideError() {
+        errorMsg.style.display = 'none';
+        usernameInput.classList.remove('input-error');
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+    }
+</script>
+
+</body>
+</html>
