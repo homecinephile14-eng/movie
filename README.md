@@ -45,7 +45,7 @@ Controller – Service – Repository – Entity 구조를 명확히 분리하�
 - `MultipartFile`을 이용한 이미지 업로드  
 - UUID 기반 파일명 생성으로 중복 방지  
 - 서버 로컬 디렉토리에 파일 저장  
-- `WebConfig`를 통한 `/images/**` URL 매핑 처리  
+- `WebConfig`를 통한 `/images/` URL 매핑 처리  
 
 ---
 
